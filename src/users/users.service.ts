@@ -58,7 +58,6 @@ export class UsersService {
         const user =  await getMongoRepository(User).findOne( deleteUserData._id );
         
         this.userRepository.delete(user);
-        console.log('jgjug')
         return true;
     }
 }
