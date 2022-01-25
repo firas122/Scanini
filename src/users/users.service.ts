@@ -3,7 +3,6 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository,getMongoRepository } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 import { GetUserArgs } from "./dto/args/get-user.args";
-import { GetUsersArgs } from "./dto/args/get-users.args";
 import { CreateUserInput } from "./dto/input/create-user.input";
 import { DeleteUserInput } from "./dto/input/delete-user.input";
 import { UpdateUserInput } from "./dto/input/update-user.input";
@@ -14,15 +13,7 @@ export class UsersService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
     ){}
-    private users: User[] = [
-        {   
-            _id :  uuidv4(),
-            email: 'dan@example.com',
-            password: 'mypassword',
-            userId: '123',
-            age: 20,
-        }
-    ];
+  
 
     async createUser(createUserData: CreateUserInput): Promise<User>{
         const {email,age} = createUserData

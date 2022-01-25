@@ -1,4 +1,5 @@
-import { Controller, Post, Req, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 import { Request } from 'express';
 
 import { User } from "../users/models/user.entity";
@@ -14,4 +15,14 @@ export class AuthController {
     login(@Req() req: Request): { access_token: string } {
         return this.authService.login(req.user as User);
     }
+
+    @Get()
+    @UseGuards(AuthGuard('google'))
+    async googleAuth(@Req() req) { }
+
+    @Get('auth/google/callback')
+    @UseGuards(AuthGuard('google'))
+    googleAuthRedirect(@Req() req) {
+    return this.authService.googleLogin(req)
+  }
 }
