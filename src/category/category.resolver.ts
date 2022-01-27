@@ -2,7 +2,7 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateCategoryInput } from "./category.input";
 import { categoryService } from "./category.service";
 import { categoryType } from "./category.type";
-import{productTocategoryInput} from "./productTocategory.input"
+import{productTocategoryInput} from "./input/productTocategory.input"
 
 @Resolver(of => categoryType)
 export class categoryResolver{

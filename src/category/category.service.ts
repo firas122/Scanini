@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { category } from "./category.entity";
 import {v4 as uuid} from 'uuid';
 import { CreateCategoryInput } from "./category.input";
-import { productTocategoryInput } from "./productTocategory.input";
+import { productTocategoryInput } from "./input/productTocategory.input";
 @Injectable()
 export class categoryService{
     constructor(
