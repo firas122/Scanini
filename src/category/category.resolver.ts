@@ -1,5 +1,5 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { CreateCategoryInput } from "./category.input";
+import { CreateCategoryInput } from "./input/category.input";
 import { categoryService } from "./category.service";
 import { categoryType } from "./category.type";
 import{productTocategoryInput} from "./input/productTocategory.input"

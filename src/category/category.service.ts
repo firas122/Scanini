@@ -3,8 +3,9 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { category } from "./category.entity";
 import {v4 as uuid} from 'uuid';
-import { CreateCategoryInput } from "./category.input";
+import { CreateCategoryInput } from "./input/category.input";
 import { productTocategoryInput } from "./input/productTocategory.input";
+import { UpdateCategoryInput } from "./input/UpdateCategory.Input";
 @Injectable()
 export class categoryService{
     constructor(
@@ -31,10 +32,23 @@ export class categoryService{
         return this.categoryRepository.save(category);
     } 
 
+    async updateCategory(UpdateCategoryInput:UpdateCategoryInput): Promise<category>{
+        const id = UpdateCategoryInput._id
+        const category  =  await this.categoryRepository.findOne({ id });
+        category.name = UpdateCategoryInput.name;
+        category.description = UpdateCategoryInput.description;
+        return this.categoryRepository.save(category);
+    }
+
+    async deleteProduct(id : string): Promise<boolean> {
+        const user =  await this.categoryRepository.findOne({ id });
+        this.categoryRepository.delete(user);
+        return true;
+    }
+
     async productTocategory(productTocategoryInput:productTocategoryInput): Promise<category>
     {const {categoryId,productIds} = productTocategoryInput
     const category= await this.categoryRepository.findOne({id :categoryId})
-    
     const a =[...productIds, ...category.products];
     const result = new Set(a)
     category.products = [...result]

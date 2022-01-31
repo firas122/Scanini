@@ -6,7 +6,18 @@ export class CreateProductInput{
     @MinLength(1)
     @Field()
     name :string;
-    @IsDateString()
+
+    @MinLength(1)
     @Field()
-    createdAt :string;
+    description :string;
+
+    @Field()
+    country :string;
+
+    @Field(() => [String],{nullable:true})
+    restrictedcountries :string[];
+
+    @Field({nullable:true})
+    pictureURL :string;
+
 }

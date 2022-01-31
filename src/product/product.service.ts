@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { product } from "./product.entity";
 import {v4 as uuid} from 'uuid';
-import { CreateProductInput } from "./product.input";
+import { CreateProductInput } from "./input/CreateProductInput";
+import { UpdateProductInput } from "./input/UpdateProductInput";
 @Injectable()
 export class productService{
     constructor(
@@ -19,12 +19,26 @@ export class productService{
 
 
     async createProduct(createProductInput:CreateProductInput): Promise<product>{
-        const {name,createdAt} = createProductInput
+        const {name,description,country,restrictedcountries} = createProductInput
         const product = this.productRepository.create(
-            {id: uuid(),name,createdAt}
+            {id: uuid(),name,description,country,restrictedcountries,createdAt : Date()}
         );
         return this.productRepository.save(product);
     } 
-    
+
+    async updateProduct(UpdateProductInput:UpdateProductInput): Promise<product>{
+        const id =  UpdateProductInput._id
+        const product =  await this.productRepository.findOne({ id });
+        product.name = UpdateProductInput.name;
+        product.description = UpdateProductInput.description;
+        product.restrictedcountries = UpdateProductInput.restrictedcountries;
+        return this.productRepository.save(product);
+    }  
+
+    async deleteProduct(id : string): Promise<boolean> {
+        const user =  await this.productRepository.findOne({ id });
+        this.productRepository.delete(user);
+        return true;
+    }
 }
 

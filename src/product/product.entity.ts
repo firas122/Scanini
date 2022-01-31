@@ -12,6 +12,9 @@ export class product{
 	name: string
 
     @Column()
+	description: string
+
+    @Column()
 	qrCode: string
 
     @Column()
@@ -27,7 +30,7 @@ export class product{
 	country: string
 
     @Column()
-	restrictedcountries: string
+	restrictedcountries: string[]
 
     @Column()
 	pictureURL: string

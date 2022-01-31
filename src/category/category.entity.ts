@@ -8,7 +8,7 @@ export class category{
     @ObjectIdColumn()
     _id: string
 
-    @PrimaryColumn()
+    @PrimaryColumn({unique : true})
     id: string
 
     @Column({unique : true})

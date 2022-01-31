@@ -1,5 +1,6 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { CreateProductInput } from "./product.input";
+import { CreateProductInput } from "./input/CreateProductInput";
+import { UpdateProductInput } from "./input/UpdateProductInput";
 import { productService } from "./product.service";
 import { productType } from "./product.type";
 
@@ -30,5 +31,12 @@ export class productResolver{
     )
     {
         return this.productService.createProduct(CreateProductInput);
-    }    
+    }
+    @Mutation(returns => productType)
+    updateproduct(
+        @Args('UpdateProductInput') UpdateProductInput: UpdateProductInput,
+    )
+    {
+        return this.productService.updateProduct(UpdateProductInput);
+    }      
 	}
