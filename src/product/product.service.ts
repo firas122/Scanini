@@ -3,8 +3,8 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { product } from "./product.entity";
 import {v4 as uuid} from 'uuid';
-import { CreateProductInput } from "./input/CreateProductInput";
-import { UpdateProductInput } from "./input/UpdateProductInput";
+import { CreateProductInput } from "./input/CreateProduct.input";
+import { UpdateProductInput } from "./input/UpdateProduct.input";
 @Injectable()
 export class productService{
     constructor(
