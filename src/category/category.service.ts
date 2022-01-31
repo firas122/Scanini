@@ -40,9 +40,9 @@ export class categoryService{
         return this.categoryRepository.save(category);
     }
 
-    async deleteProduct(id : string): Promise<boolean> {
-        const user =  await this.categoryRepository.findOne({ id });
-        this.categoryRepository.delete(user);
+    async deletecategory(id : string): Promise<boolean> {
+        const category =  await this.categoryRepository.findOne({ id });
+        this.categoryRepository.delete(category);
         return true;
     }
 
