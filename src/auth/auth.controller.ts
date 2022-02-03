@@ -1,28 +1,18 @@
-import { Controller, Get, Post, Req, UseGuards } from "@nestjs/common";
-import { AuthGuard } from "@nestjs/passport";
-import { Request } from 'express';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { AuthService } from './auth.service';
+import { AuthGuard } from '@nestjs/passport';
 
-import { User } from "../users/models/user.entity";
-import { AuthService } from "./auth.service";
-import { LocalAuthGuard } from "./guards/local-auth.guard";
-
-@Controller('auth')
+@Controller('google')
 export class AuthController {
-    constructor(private readonly authService: AuthService) {}
+  constructor(private readonly appService: AuthService) {}
 
-    @UseGuards(LocalAuthGuard)
-    @Post('login')
-    login(@Req() req: Request): { access_token: string } {
-        return this.authService.login(req.user as User);
-    }
+  @Get()
+  @UseGuards(AuthGuard('google'))
+  async googleAuth(@Req() req) {}
 
-    @Get()
-    @UseGuards(AuthGuard('google'))
-    async googleAuth(@Req() req) { }
-
-    @Get('auth/google/callback')
-    @UseGuards(AuthGuard('google'))
-    googleAuthRedirect(@Req() req) {
-    return this.authService.googleLogin(req)
+  @Get('redirect')
+  @UseGuards(AuthGuard('google'))
+  googleAuthRedirect(@Req() req) {
+    return this.appService.googleLogin(req)
   }
 }

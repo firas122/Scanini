@@ -1,4 +1,25 @@
 import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class AuthService {
+  googleLogin(req) {
+    if (!req.user) {
+      return 'No user from google'
+    }
+
+    return {
+      message: 'User information from google',
+      user: req.user
+    }
+  }
+}
+
+
+
+
+
+
+/*import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/models/user.entity';
 
@@ -58,4 +79,4 @@ export class AuthService {
         }
       }
 
-}
+}*/
