@@ -27,8 +27,7 @@ export class category{
     @Column()
 	deletedAt: string
 
-    @OneToMany(() => product,product => product)
-    @Column({unique : true})
-	products: string[]
+    @OneToMany(() => product,product => product.category)
+	products: product[]
 
 }

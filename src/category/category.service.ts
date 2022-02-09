@@ -25,9 +25,8 @@ export class categoryService{
 
     async createCategory(CreateCategoryInput:CreateCategoryInput ): Promise<category>{
         const {name,description} = CreateCategoryInput
-        const products = CreateCategoryInput.productIds
         const category = this.categoryRepository.create(
-            {id: uuid(),name,description,products}
+           {id :uuid(),name,description}
         );
         return this.categoryRepository.save(category);
     } 
@@ -51,7 +50,6 @@ export class categoryService{
     const category= await this.categoryRepository.findOne({id :categoryId})
     const a =[...productIds, ...category.products];
     const result = new Set(a)
-    category.products = [...result]
     
     return this.categoryRepository.save(category);
 

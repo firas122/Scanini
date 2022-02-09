@@ -22,7 +22,7 @@ export class categoryType {
     @Field({ nullable: true })
 	deletedAt: string  
     
-    @Field(()=> [productType],{ nullable: true })
-	products: string[]
+    @Field(()=> productType)
+	products: productType[]
 
 }

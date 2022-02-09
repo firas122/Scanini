@@ -20,4 +20,7 @@ export class CreateProductInput{
     @Field({nullable:true})
     pictureURL :string;
 
+    @Field()
+    categoryId: string;
+
 }

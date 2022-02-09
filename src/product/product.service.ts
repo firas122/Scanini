@@ -19,9 +19,9 @@ export class productService{
 
 
     async createProduct(createProductInput:CreateProductInput): Promise<product>{
-        const {name,description,country,restrictedcountries} = createProductInput
+        const {name,description,country,restrictedcountries,categoryId} = createProductInput
         const product = this.productRepository.create(
-            {id: uuid(),name,description,country,restrictedcountries,createdAt : Date()}
+            {id: uuid(),name,description,country,restrictedcountries,createdAt : Date(),categoryId}
         );
         return this.productRepository.save(product);
     } 

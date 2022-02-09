@@ -1,4 +1,6 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql"
+import { category } from "src/category/category.entity"
+import { categoryType } from "src/category/category.type"
 
 
 @ObjectType('productType')
@@ -8,6 +10,9 @@ export class productType {
 
     @Field()
 	name: string
+
+    @Field({ nullable: true })
+	description: string
 
     @Field({ nullable: true })
 	qrCode: string
@@ -37,5 +42,8 @@ export class productType {
 	updatedAt: string
 
     @Field({ nullable: true })
-	deletedAt: string    
+	deletedAt: string 
+    
+    @Field(()=>categoryType)
+	category: categoryType
 }

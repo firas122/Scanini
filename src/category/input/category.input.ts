@@ -1,6 +1,5 @@
 import { InputType,Field, ID } from '@nestjs/graphql';
 import { MinLength} from 'class-validator';
-import { isNullableType } from 'graphql';
 
 @InputType()
 export class CreateCategoryInput{
@@ -12,6 +11,5 @@ export class CreateCategoryInput{
     @Field()
     description :string;
 
-    @Field(type => [ID],{nullable:true})
-    productIds:string[];
+    
 }
