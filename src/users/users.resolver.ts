@@ -1,15 +1,15 @@
-import { UseGuards } from "@nestjs/common";
+import { Req, UseGuards } from "@nestjs/common";
 import { Resolver, Query, Args, Mutation } from "@nestjs/graphql";
 import { CurrentUser } from "../auth/current-user.decorator";
 import { GqlAuthGuard } from "../auth/guards/gql-auth.guard";
 import { GetUserArgs } from "./dto/args/get-user.args";
-import { GetUsersArgs } from "./dto/args/get-users.args";
 import { CreateUserInput } from "./dto/input/create-user.input";
 import { DeleteUserInput } from "./dto/input/delete-user.input";
 import { UpdateUserInput } from "./dto/input/update-user.input";
 import { userType } from "./users.type";
 import { User } from "./models/user.entity";
 import { UsersService } from "./users.service";
+import { Request } from "express";
 
 @Resolver(() => User)
 export class UsersResolver {
@@ -24,6 +24,11 @@ export class UsersResolver {
     @Query(returns => [userType])
 	getUsers(){
         return this.usersService.getUsers();
+    }
+
+    @Query(returns => Boolean)
+	getUserByEmail(@Args('email') email: string,){
+        return this.usersService.getUserByEmail(email);
     }
 
     @Mutation(returns => userType)
@@ -45,4 +50,6 @@ export class UsersResolver {
     deleteUser(@Args('deleteUserData') deleteUserData: DeleteUserInput){
         return this.usersService.deleteUser(deleteUserData);
     }
+
+   
 }

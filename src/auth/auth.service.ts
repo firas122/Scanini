@@ -1,15 +1,26 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository} from "typeorm";
+import { User } from "../users/models/user.entity";
 
 @Injectable()
 export class AuthService {
-  googleLogin(req) {
+  constructor(
+    @InjectRepository(User) private userRepository: Repository<User>,
+    
+    
+){}
+  
+  async googleLogin(req) {
     if (!req.user) {
       return 'No user from google'
     }
-
+    try{
+    this.userRepository.save(req.user)}
+    catch(error){return 'user already exist'}
     return {
       message: 'User information from google',
-      user: req.user
+      user: req.user,
     }
   }
 }

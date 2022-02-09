@@ -1,6 +1,7 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable, Req } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository,getMongoRepository } from "typeorm";
+import { AuthService } from "src/auth/auth.service";
+import { Repository,getMongoRepository, Any } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
 import { GetUserArgs } from "./dto/args/get-user.args";
 import { CreateUserInput } from "./dto/input/create-user.input";
@@ -11,7 +12,10 @@ import { User } from "./models/user.entity";
 @Injectable()
 export class UsersService {
     constructor(
+        
         @InjectRepository(User) private userRepository: Repository<User>,
+        @Inject(forwardRef(() => AuthService))
+        private AuthService: AuthService,
     ){}
   
 
@@ -28,17 +32,20 @@ export class UsersService {
     async updateUser(updateUserData: UpdateUserInput): Promise<User> {
         const user =  await getMongoRepository(User).findOne( updateUserData._id );
         
-        user.isSubscribed = updateUserData.isSubscribed;
         user.age = updateUserData.age;
         return this.userRepository.save(user);
     }
 
     async getUser(getUserArgs: GetUserArgs): Promise<User> {
-        return this.userRepository.findOne(getUserArgs._id);
+        return this.userRepository.findOne(getUserArgs.email);
     }
 
-    async getUserByEmail(email: string): Promise<User> {
-        return this.userRepository.findOne(email);
+    async getUserByEmail(email: string): Promise<Boolean> {
+        const a = email;
+        const result = await getMongoRepository(User).findOne({email})
+        if (result)
+            return true;
+        return false;
     }
 
     async getUsers(): Promise<User[]>{
@@ -51,4 +58,6 @@ export class UsersService {
         this.userRepository.delete(user);
         return true;
     }
+
+  
 }

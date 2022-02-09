@@ -6,4 +6,7 @@ export class GetUserArgs {
     @Field()
     @IsNotEmpty()
     _id: string;
+
+    @Field()
+    email: string;
 }

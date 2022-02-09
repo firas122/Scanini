@@ -10,13 +10,19 @@ export class User {
     userId: string;
 
     @Column()
+    firstName: string;
+
+    @Column()
+    lastName: string;
+
+    @Column()
+    picture: string;
+
+    @Column({unique : true})
     email: string;
 
     @Column()
     age: number;
-
-    @Column({ nullable: true })
-    isSubscribed?: boolean;
 
     @Column({ nullable: true })
     password?: string
