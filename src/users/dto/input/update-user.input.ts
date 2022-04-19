@@ -15,4 +15,7 @@ export class UpdateUserInput {
     @Field({ nullable: true })
     @IsOptional()
     isSubscribed?: boolean
+
+    @Field(()=> [String], {nullable:true})
+    scanhistory: string[];
 }

@@ -26,4 +26,10 @@ export class User {
 
     @Column({ nullable: true })
     password?: string
+
+    @Column()
+    accessToken: string;
+
+    @Column({ nullable: true ,unique: false,array:true})
+    scantrack: [string];   
 }

@@ -16,8 +16,7 @@ export class UsersResolver {
     constructor(private readonly usersService: UsersService) {}
 
     @Query(() => userType)
-    @UseGuards(GqlAuthGuard)
-    getUser(@CurrentUser() user: User,  @Args() getUserArgs: GetUserArgs) {
+    getUser(@Args() getUserArgs: GetUserArgs) {
         return this.usersService.getUser(getUserArgs);
     }
 
@@ -26,7 +25,7 @@ export class UsersResolver {
         return this.usersService.getUsers();
     }
 
-    @Query(returns => Boolean)
+    @Query(returns => userType)
 	getUserByEmail(@Args('email') email: string,){
         return this.usersService.getUserByEmail(email);
     }
@@ -46,10 +45,22 @@ export class UsersResolver {
         return this.usersService.updateUser(updateUserData);
     }
 
+    @Mutation(() => userType)
+    updatetrack( @Args('cod') cod: string ,@Args('_id') _id: string)
+    {
+        return this.usersService.updatetrack(cod,_id);
+    }
+
+    @Mutation(() => userType)
+    cleartrack( @Args('_id') _id: string)
+    {
+        return this.usersService.cleartrack(_id);
+    }
+
     @Mutation(() => Boolean)
     deleteUser(@Args('deleteUserData') deleteUserData: DeleteUserInput){
         return this.usersService.deleteUser(deleteUserData);
     }
 
-   
+   zz
 }

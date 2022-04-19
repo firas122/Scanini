@@ -20,10 +20,12 @@ export class UsersService {
   
 
     async createUser(createUserData: CreateUserInput): Promise<User>{
-        const {email,age} = createUserData
+        const {email,age,firstName} = createUserData
+        let scantrack = []
+        
         const user = this.userRepository.create(
         
-            {userId: uuidv4(),email,age}
+            {userId: uuidv4(),email,age,firstName,scantrack}
         );
         
         return  this.userRepository.save(user);
@@ -36,16 +38,27 @@ export class UsersService {
         return this.userRepository.save(user);
     }
 
+    async cleartrack(_id: string): Promise<User> {
+        const user =  await getMongoRepository(User).findOne( _id );
+        
+        user.scantrack = [""];
+        return this.userRepository.save(user);
+    }
+
+    async updatetrack(cod : string,_id : string): Promise<User> {
+        const user =  await getMongoRepository(User).findOne( _id );
+        user.scantrack.push(cod)
+        return this.userRepository.save(user);
+    }
+
     async getUser(getUserArgs: GetUserArgs): Promise<User> {
         return this.userRepository.findOne(getUserArgs.email);
     }
 
-    async getUserByEmail(email: string): Promise<Boolean> {
-        const a = email;
-        const result = await getMongoRepository(User).findOne({email})
-        if (result)
-            return true;
-        return false;
+    async getUserByEmail(email: string): Promise<User> {
+        
+        const user =  await getMongoRepository(User).findOne( {email} );
+        return user;
     }
 
     async getUsers(): Promise<User[]>{

@@ -10,6 +10,8 @@ export class productResolver{
     constructor(
         private productService: productService
     ){}
+
+
 	@Query(returns => productType)
 	product(@Args('id') id : string,
     ){
@@ -17,8 +19,15 @@ export class productResolver{
         
     }
 
+    @Query(returns => productType)
+	productbycode(@Args('barCode') barCode : string,
+    ){
+        return this.productService.getProductbycode(barCode);
+        
+    }
+
     @Query(returns => [productType])
-	products(){
+	async products(){
         return this.productService.getProducts();
     }
 

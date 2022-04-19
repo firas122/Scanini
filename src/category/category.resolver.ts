@@ -2,6 +2,7 @@ import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CreateCategoryInput } from "./input/category.input";
 import { categoryService } from "./category.service";
 import { categoryType } from "./category.type";
+import { Get, HttpStatus, Post, Res } from "@nestjs/common";
 
 @Resolver(() => categoryType)
 export class categoryResolver{
@@ -9,13 +10,14 @@ export class categoryResolver{
     constructor(
         private categoryService: categoryService
     ){}
+    
 	@Query(returns => categoryType)
-	category(@Args('id') id : string,
-    ){
+	category(@Args('id') id : string,)
+    {
         return this.categoryService.getcategory(id);
         
     }
-
+    
     @Query(returns => [categoryType])
 	categories(){
         return this.categoryService.getcategories();

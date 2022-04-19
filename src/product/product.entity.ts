@@ -31,6 +31,9 @@ export class product{
 	country: string
 
     @Column()
+	manufacter: string
+
+    @Column()
 	restrictedcountries: string[]
 
     @Column()
@@ -50,5 +53,8 @@ export class product{
 
     @Column()
 	categoryId: string
+
+    @Column()
+	categoryname: string
 
 }

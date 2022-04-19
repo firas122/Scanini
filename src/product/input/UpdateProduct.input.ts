@@ -8,7 +8,7 @@ export class UpdateProductInput{
     _id: string;
 
     @MinLength(1)
-    @Field()
+    @Field({ nullable: true })
     @IsOptional()
     name :string;
 
@@ -17,6 +17,14 @@ export class UpdateProductInput{
     @IsOptional()
     description :string;
 
+    @MinLength(1)
+    @Field({ nullable: true })
+    @IsOptional()
+    country :string;
+
+    @Field({ nullable: true })
+    @IsOptional()
+    manufacter :string;
 
     @Field(() => [String],{ nullable: true })
     @IsOptional()
@@ -25,5 +33,17 @@ export class UpdateProductInput{
     @Field({ nullable: true })
     @IsOptional()
     pictureURL :string;
+
+    @Field({ nullable: true })
+    @IsOptional()
+    barCode :string;
+
+    @Field({ nullable: true })
+    @IsOptional()
+    categoryId :string;
+
+
+
+
 
 }

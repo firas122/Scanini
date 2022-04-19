@@ -1,4 +1,4 @@
-import { InputType,Field } from '@nestjs/graphql';
+import { InputType,Field, ID } from '@nestjs/graphql';
 import {IsDateString, MinLength} from 'class-validator';
 
 @InputType()
@@ -14,13 +14,19 @@ export class CreateProductInput{
     @Field()
     country :string;
 
+    @Field()
+    manufacter :string;
+
     @Field(() => [String],{nullable:true})
     restrictedcountries :string[];
 
     @Field({nullable:true})
     pictureURL :string;
 
-    @Field()
+    @Field({nullable:true})
+    barCode :string;
+
+    @Field(type => ID)
     categoryId: string;
 
 }

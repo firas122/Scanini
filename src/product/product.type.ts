@@ -30,6 +30,9 @@ export class productType {
 	country: string
 
     @Field({ nullable: true })
+	manufacter: string
+
+    @Field({ nullable: true })
 	restrictedcountries: string
 
     @Field({ nullable: true })
@@ -46,4 +49,7 @@ export class productType {
     
     @Field(()=>categoryType)
 	category: categoryType
+
+    @Field()
+	categoryId: string
 }

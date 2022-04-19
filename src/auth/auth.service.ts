@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository} from "typeorm";
 import { User } from "../users/models/user.entity";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
@@ -16,6 +17,8 @@ export class AuthService {
       return 'No user from google'
     }
     try{
+    req.user.scantrack = []
+    req.user.userId= uuidv4();
     this.userRepository.save(req.user)}
     catch(error){return 'user already exist'}
     return {
