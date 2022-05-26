@@ -1,6 +1,5 @@
 import { Req, UseGuards } from "@nestjs/common";
 import { Resolver, Query, Args, Mutation } from "@nestjs/graphql";
-import { CurrentUser } from "../auth/current-user.decorator";
 import { GqlAuthGuard } from "../auth/guards/gql-auth.guard";
 import { GetUserArgs } from "./dto/args/get-user.args";
 import { CreateUserInput } from "./dto/input/create-user.input";
@@ -9,15 +8,17 @@ import { UpdateUserInput } from "./dto/input/update-user.input";
 import { userType } from "./users.type";
 import { User } from "./models/user.entity";
 import { UsersService } from "./users.service";
-import { Request } from "express";
+import { CurrentUser } from "./get-user.decorator";
 
 @Resolver(() => User)
 export class UsersResolver {
     constructor(private readonly usersService: UsersService) {}
 
     @Query(() => userType)
-    getUser(@Args() getUserArgs: GetUserArgs) {
-        return this.usersService.getUser(getUserArgs);
+    @UseGuards(GqlAuthGuard)
+    getUser(@CurrentUser() user: User,@Args('email') email:string) {
+        console.log(user)
+        return this.usersService.getUser(email);
     }
 
     @Query(returns => [userType])
@@ -32,10 +33,24 @@ export class UsersResolver {
 
     @Mutation(returns => userType)
     createUser(
-        @Args('createUserData') createUserData: CreateUserInput,
-    ) 
+        @Args('createUserData') createUserData: CreateUserInput,) 
     {
         return this.usersService.createUser(createUserData);
+    }
+
+    @Mutation(() => userType)
+    loguser(@Args('email') email: string,@Args('password') password: string) 
+    {
+        return this.usersService.loguser(email,password);
+    }
+
+    @Mutation(returns => String)
+    @UseGuards(GqlAuthGuard)
+    test(@Req() req) 
+    {
+        const a = "success"
+        return a;
+        
     }
 
 
@@ -52,6 +67,12 @@ export class UsersResolver {
     }
 
     @Mutation(() => userType)
+    updatecards( @Args('cod') card: string ,@Args('_id') _id: string)
+    {
+        return this.usersService.updatecards(card,_id);
+    }
+
+    @Mutation(() => userType)
     cleartrack( @Args('_id') _id: string)
     {
         return this.usersService.cleartrack(_id);
@@ -61,6 +82,5 @@ export class UsersResolver {
     deleteUser(@Args('deleteUserData') deleteUserData: DeleteUserInput){
         return this.usersService.deleteUser(deleteUserData);
     }
-
-   zz
+    
 }

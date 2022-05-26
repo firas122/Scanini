@@ -17,14 +17,14 @@ export class userType {
     @Field()
 	firstName: string
 
-    @Field()
-    lastName: string;
+    @Field({ nullable: true })
+    lastName: string
 
-    @Field()
+    @Field({ nullable: true })
 	age: number
 
-    @Field()
-    picture: string;
+    @Field({ nullable: true })
+    picture: string
 
     @Field({ nullable: true })
 	isSubscribed: boolean
@@ -32,9 +32,12 @@ export class userType {
     @Field({ nullable: true })
 	password: boolean
 
-    @Field()
+    @Field({ nullable: true })
 	accessToken: string
 
     @Field(() => [String])
 	scantrack: string[]
+
+    @Field(() => [String])
+	cards: string[]
 }

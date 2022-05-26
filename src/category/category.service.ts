@@ -49,8 +49,6 @@ export class categoryService{
     {const {categoryId,productIds} = productTocategoryInput
     const category= await this.categoryRepository.findOne({id :categoryId})
     const a =[...productIds, ...category.products];
-    const result = new Set(a)
-    
     return this.categoryRepository.save(category);
 
 }    

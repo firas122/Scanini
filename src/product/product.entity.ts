@@ -48,13 +48,6 @@ export class product{
     @Column()
 	deletedAt: string
 
-    @ManyToOne(() => category,category => category.products)
+    @ManyToOne(() => category,category => category._id,{nullable:false})
 	category: category
-
-    @Column()
-	categoryId: string
-
-    @Column()
-	categoryname: string
-
 }

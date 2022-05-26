@@ -31,6 +31,11 @@ export class productResolver{
         return this.productService.getProducts();
     }
 
+    @Query(returns => [productType])
+	async Productsbycat(@Args('catid') catid : string,){
+        return this.productService.Productsbycat(catid);
+    }
+
 
 
 

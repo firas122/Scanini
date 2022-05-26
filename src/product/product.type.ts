@@ -1,5 +1,4 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql"
-import { category } from "src/category/category.entity"
 import { categoryType } from "src/category/category.type"
 
 
@@ -7,6 +6,9 @@ import { categoryType } from "src/category/category.type"
 export class productType {
     @Field(type => ID)
 	id: string
+
+    @Field()
+	_id: string
 
     @Field()
 	name: string
@@ -47,9 +49,8 @@ export class productType {
     @Field({ nullable: true })
 	deletedAt: string 
     
-    @Field(()=>categoryType)
+    @Field(()=>categoryType,{nullable:true})
 	category: categoryType
 
-    @Field()
-	categoryId: string
+    
 }

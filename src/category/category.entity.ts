@@ -27,7 +27,7 @@ export class category{
     @Column()
 	deletedAt: string
 
-    @OneToMany(() => product,product => product.id)
+    @OneToMany(() => product,product => product._id)
     @JoinTable()
 	products: product[]
 

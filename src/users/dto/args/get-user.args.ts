@@ -10,4 +10,7 @@ export class GetUserArgs {
     @Field({ nullable: true })
     @IsEmail()
     email: string;
+
+    @Field({ nullable: true })
+    firstName: string;
 }

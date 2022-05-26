@@ -8,6 +8,9 @@ export class categoryType {
 	id: string
 
     @Field()
+	_id: string
+
+    @Field()
 	name: string
 
     @Field()

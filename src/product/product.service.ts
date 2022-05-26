@@ -28,16 +28,17 @@ export class productService{
         return this.productRepository.find();
     }
 
-    
-
+    async Productsbycat(catid:string): Promise<product[]>{
+        return this.productRepository.find({relations: ['category'],loadRelationIds:true,});
+    }
 
     async createProduct(createProductInput:CreateProductInput): Promise<product>{
-        const {name,description,country,restrictedcountries,categoryId,manufacter,pictureURL} = createProductInput
-        
-        //const categoryname= (await this.categoryRepository.findOne(categoryId));
+        const {name,description,country,restrictedcountries,manufacter,pictureURL} = createProductInput
+        const cat = await this.categoryRepository.findOne(createProductInput.categoryId)
         const product = this.productRepository.create(
-            {id: uuid(),name,description,country,restrictedcountries,createdAt : Date(),categoryId,manufacter,pictureURL}
+            {id: uuid(),name,description,country,restrictedcountries,createdAt : Date(),manufacter,pictureURL}
         );
+        product.category=cat
         return this.productRepository.save(product);
     } 
 
@@ -51,7 +52,7 @@ export class productService{
         if (UpdateProductInput.barCode)
             product.barCode = UpdateProductInput.barCode;
 
-        if (UpdateProductInput.country)
+        if (UpdateProductInput.country) 
             product.country = UpdateProductInput.country;
 
         if (UpdateProductInput.pictureURL)

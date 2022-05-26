@@ -6,30 +6,34 @@ export class User {
     @ObjectIdColumn()
     _id: string
 
-    @PrimaryColumn()
+    @PrimaryColumn({unique:true})
     userId: string;
 
     @Column()
     firstName: string;
 
-    @Column()
+    @Column({ nullable: true})
     lastName: string;
 
-    @Column()
+    @Column({ nullable: true})
     picture: string;
 
     @Column({unique : true})
     email: string;
 
-    @Column()
+    @Column({ nullable: true})
     age: number;
 
-    @Column({ nullable: true })
+    @Column()
     password?: string
 
-    @Column()
+    @Column({ nullable: true})
     accessToken: string;
 
-    @Column({ nullable: true ,unique: false,array:true})
-    scantrack: [string];   
+
+    @Column({ nullable: true ,unique: false,array:true,default:[]})
+    scantrack: [string];
+
+    @Column({ nullable: true ,unique: false,array:true,default:[]})
+    cards: [string];
 }

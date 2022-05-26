@@ -6,25 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    @InjectRepository(User) private userRepository: Repository<User>,
-    
-    
-){}
-  
   async googleLogin(req) {
-    if (!req.user) {
-      return 'No user from google'
-    }
-    try{
-    req.user.scantrack = []
-    req.user.userId= uuidv4();
-    this.userRepository.save(req.user)}
-    catch(error){return 'user already exist'}
-    return {
-      message: 'User information from google',
-      user: req.user,
-    }
+    
   }
 }
 
