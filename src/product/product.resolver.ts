@@ -1,4 +1,6 @@
+import { forwardRef, Inject } from "@nestjs/common";
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
+import { categoryService } from "src/category/category.service";
 import { CreateProductInput } from "./input/CreateProduct.input";
 import { UpdateProductInput } from "./input/UpdateProduct.input";
 import { productService } from "./product.service";
@@ -8,7 +10,7 @@ import { productType } from "./product.type";
 export class productResolver{
 
     constructor(
-        private productService: productService
+        private productService: productService,
     ){}
 
 

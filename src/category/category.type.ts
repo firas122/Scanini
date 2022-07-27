@@ -25,7 +25,13 @@ export class categoryType {
     @Field({ nullable: true })
 	deletedAt: string  
     
-    @Field(()=> productType)
-	products: productType[]
+    @Field(()=> [productType],{ nullable: true })
+	products:   string[]
+
+    @Field(()=> [categoryType],{ nullable: true })
+	children: categoryType[]
+
+    @Field(()=> categoryType,{ nullable: true })
+	parent: categoryType
 
 }

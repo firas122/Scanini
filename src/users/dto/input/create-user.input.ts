@@ -7,6 +7,9 @@ export class CreateUserInput {
     @Field()
     @IsNotEmpty()
     firstName: string;
+    @Field()
+    @IsNotEmpty()
+    lastName: string;
 
     @Field()
     @IsNotEmpty()

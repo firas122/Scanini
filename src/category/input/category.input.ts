@@ -1,5 +1,5 @@
 import { InputType,Field, ID } from '@nestjs/graphql';
-import { MinLength} from 'class-validator';
+import { IsUUID, isUUID, MinLength} from 'class-validator';
 
 @InputType()
 export class CreateCategoryInput{
@@ -10,6 +10,11 @@ export class CreateCategoryInput{
     @MinLength(1)
     @Field()
     description :string;
+
+    @IsUUID("4",{each:true})
+    @Field(()=> [ID],{defaultValue : []})
+    products:string[]
+
 
     
 }

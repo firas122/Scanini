@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
+import { Like, Repository } from "typeorm";
 import { product } from "./product.entity";
 import {v4 as uuid} from 'uuid';
 import { CreateProductInput } from "./input/CreateProduct.input";
@@ -21,15 +21,19 @@ export class productService{
     }
 
     async getProductbycode(barCode : string): Promise<product>{
-        return this.productRepository.findOne({barCode});
+        return this.productRepository.findOne({where:{barCode : barCode  }});
     }
 
     async getProducts(): Promise<product[]>{
-        return this.productRepository.find();
+        return this.productRepository.find(); 
+    }
+
+    async getmanyProducts(productIDs:string[]): Promise<product[]>{
+        return this.productRepository.find({where:{id:{$in:productIDs}}}); 
     }
 
     async Productsbycat(catid:string): Promise<product[]>{
-        return this.productRepository.find({relations: ['category'],loadRelationIds:true,});
+        return this.productRepository.find({where:{categoryId : catid  }});
     }
 
     async createProduct(createProductInput:CreateProductInput): Promise<product>{

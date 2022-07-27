@@ -52,5 +52,6 @@ export class productType {
     @Field(()=>categoryType,{nullable:true})
 	category: categoryType
 
-    
+    @Field({ nullable: true })
+	categoryId: string 
 }

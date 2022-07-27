@@ -35,7 +35,7 @@ export class UsersResolver {
     createUser(
         @Args('createUserData') createUserData: CreateUserInput,) 
     {
-        return this.usersService.createUser(createUserData);
+        return  this.usersService.createUser(createUserData);
     }
 
     @Mutation(() => userType)
@@ -48,8 +48,8 @@ export class UsersResolver {
     @UseGuards(GqlAuthGuard)
     test(@Req() req) 
     {
-        const a = "success"
-        return a;
+        const a = "guarding success"
+        return a; 
         
     }
 
@@ -61,15 +61,15 @@ export class UsersResolver {
     }
 
     @Mutation(() => userType)
-    updatetrack( @Args('cod') cod: string ,@Args('_id') _id: string)
+    updatetrack( @Args('cod') cod: string ,@Args('email') email: string)
     {
-        return this.usersService.updatetrack(cod,_id);
+        return this.usersService.updatetrack(cod,email);
     }
 
     @Mutation(() => userType)
-    updatecards( @Args('cod') card: string ,@Args('_id') _id: string)
+    updatecards( @Args('card') card: string,@Args('cardname') cardname: string ,@Args('email') email: string)
     {
-        return this.usersService.updatecards(card,_id);
+        return this.usersService.updatecards(card,cardname,email);
     }
 
     @Mutation(() => userType)

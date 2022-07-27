@@ -12,7 +12,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy) {
     super({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-      callbackURL: 'https://proud-places-behave-197-1-52-167.loca.lt/google/redirect',
+      callbackURL: 'https://empty-bikes-feel-197-14-238-157.loca.lt/google/redirect',
       scope: ['email', 'profile'],
     });
   }

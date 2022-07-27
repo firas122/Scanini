@@ -1,5 +1,5 @@
 import { category } from "src/category/category.entity";
-import { Column, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn } from "typeorm";
+import { Column, Entity, ManyToOne, ObjectIdColumn, PrimaryColumn, RelationId } from "typeorm";
 
 @Entity()
 export class product{
@@ -49,5 +49,8 @@ export class product{
 	deletedAt: string
 
     @ManyToOne(() => category,category => category._id,{nullable:false})
-	category: category
+	category:category
+
+    @Column()
+    categoryId : string
 }

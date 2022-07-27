@@ -30,7 +30,7 @@ export class userType {
 	isSubscribed: boolean
 
     @Field({ nullable: true })
-	password: boolean
+	password: string
 
     @Field({ nullable: true })
 	accessToken: string
@@ -38,6 +38,6 @@ export class userType {
     @Field(() => [String])
 	scantrack: string[]
 
-    @Field(() => [String])
-	cards: string[]
+    @Field(() => [[String]])
+	cards: string[][]
 }

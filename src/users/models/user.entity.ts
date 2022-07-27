@@ -31,9 +31,9 @@ export class User {
     accessToken: string;
 
 
-    @Column({ nullable: true ,unique: false,array:true,default:[]})
+    @Column({ unique: false,array:true,default:[]})
     scantrack: [string];
 
-    @Column({ nullable: true ,unique: false,array:true,default:[]})
-    cards: [string];
+    @Column({ unique: false,array:true,default:[[]]})
+    cards: [string[]];
 }

@@ -1,9 +1,7 @@
-import { forwardRef, Inject, Injectable, Req, UnauthorizedException } from "@nestjs/common";
+import { Injectable, UnauthorizedException } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { AuthService } from "src/auth/auth.service";
-import { Repository, getMongoRepository, Any } from "typeorm";
+import { Repository, getMongoRepository } from "typeorm";
 import { v4 as uuidv4 } from 'uuid';
-import { GetUserArgs } from "./dto/args/get-user.args";
 import { CreateUserInput } from "./dto/input/create-user.input";
 import { DeleteUserInput } from "./dto/input/delete-user.input";
 import { UpdateUserInput } from "./dto/input/update-user.input";
@@ -17,19 +15,21 @@ export class UsersService {
     constructor(
 
         @InjectRepository(User) private userRepository: Repository<User>,
-        private jwtService:JwtService,
+        private jwtService:JwtService, 
     ) { }
 
-
     async createUser(createUserData: CreateUserInput): Promise<User> {
-        const { email, age, firstName } = createUserData
+        const { email, age, firstName } = createUserData 
         const password = await bcrypt.hash(createUserData.password, await bcrypt.genSalt())
-        let scantrack = [""]
-        let cards = [""]
+        const scantrack = []
+        const cards=[[]]
         const payload : JwtPayload = {email};const accessToken : string =  this.jwtService.sign(payload);
-        const user = this.userRepository.create({ userId: uuidv4(), email, age, firstName, password, scantrack, cards,accessToken });
-        return (await this.userRepository.save(user));
+        const user = this.userRepository.create({ userId: uuidv4(), email, age, firstName, password,  accessToken,scantrack,cards });
+        if (user){return (await this.userRepository.save(user));}
+        else
+        {throw new UnauthorizedException('please check credentials')}
     }
+    
 
     async loguser(email:string,password:string): Promise<User> {
         const user =  await this.userRepository.findOne({email})
@@ -49,23 +49,23 @@ export class UsersService {
         const user = await getMongoRepository(User).findOne(_id);
 
         user.scantrack = [""];
-        return this.userRepository.save(user);
+        return this.userRepository.save(user); 
     }
 
-    async updatetrack(cod: string, _id: string): Promise<User> {
-        const user = await getMongoRepository(User).findOne(_id);
+    async updatetrack(cod: string, email: string): Promise<User> {
+        const user = await getMongoRepository(User).findOne({email});
         user.scantrack.unshift(cod)
         return this.userRepository.save(user);
     }
 
-    async updatecards(card: string, _id: string): Promise<User> {
-        const user = await getMongoRepository(User).findOne(_id);
-        user.cards.unshift(card)
+    async updatecards(card: string,cardname: string ,email: string): Promise<User> {
+        const user = await getMongoRepository(User).findOne({email});
+        user.cards.unshift([card,cardname])
         return this.userRepository.save(user);
     }
 
-    async getUser(email:string): Promise<User> {
-        return this.userRepository.findOne({ email });
+    async getUser(email:string): Promise<User> { 
+        return this.userRepository.findOne({ email }); 
     }
 
     async getUserByEmail(email: string): Promise<User> {

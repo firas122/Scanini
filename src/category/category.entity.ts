@@ -1,7 +1,7 @@
 import { type } from "os";
 import { product } from "src/product/product.entity";
 import { productType } from "src/product/product.type";
-import { Column, Entity, JoinTable, ObjectIdColumn, OneToMany, PrimaryColumn } from "typeorm";
+import { Column, Entity, JoinTable, ManyToMany, ManyToOne, ObjectIdColumn, OneToMany, PrimaryColumn, Tree, TreeChildren, TreeParent } from "typeorm";
 
 @Entity()
 export class category{
@@ -27,8 +27,12 @@ export class category{
     @Column()
 	deletedAt: string
 
-    @OneToMany(() => product,product => product._id)
-    @JoinTable()
-	products: product[]
+    @Column()
+	products: string[]
 
+   @ManyToOne(type => category,category =>category.children,{nullable:true})
+   parent : category
+
+   @OneToMany(type => category,category =>category.parent,{nullable:true})
+   children : category[]
 }
